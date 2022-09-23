@@ -20,6 +20,10 @@ public class PlayerManager : MonoBehaviour
     float moveX;
     float rightjoystick;
 
+    float posY;
+    float posX;
+ 
+
 
 
     // Start is called before the first frame update
@@ -38,12 +42,19 @@ public class PlayerManager : MonoBehaviour
     void Update()
 
     {
-        //Translacion
+        //Obtengo mi posicion en X y en Y
+
+        posY = transform.position.y;
+        posX = transform.position.x;
+                    
+        
+        //Translacion valores gamepad
 
         moveX = Input.GetAxis("Horizontal");
         moveY = Input.GetAxis("Vertical");
+        
 
-        //rotacion
+        //rotacion gamepad
 
         rightjoystick = Input.GetAxis("HorizontalRJ");
 
@@ -52,9 +63,28 @@ public class PlayerManager : MonoBehaviour
         /* navePos +=  despl;
          transform.position = navePos * deplSpeed * Time.deltaTime;*/
 
-        transform.Translate(Vector3.up * desplSpeed * Time.deltaTime * moveY, Space.World);
-        transform.Translate(Vector3.right * desplSpeed * Time.deltaTime * moveX, Space.World);
+        Vector3 movimientoV = Vector3.up * desplSpeed * Time.deltaTime * moveY;
+        Vector3 movimientoH = Vector3.right * desplSpeed * Time.deltaTime * moveX;
+
+        //transform.Translate(movimientoV, Space.World);
+        //transform.Translate(movimientoH, Space.World);
+
+         //|| A no ser
+        if((posY <= 10 || moveY < 0)&&(posY >=0|| moveY >0))
+        {
+
+            transform.Translate(movimientoV, Space.World);
+        } 
+
+        if(posX <= 0 || moveX < 0)
+        {
+
+            transform.Translate(movimientoH, Space.World);
+        }
+
+
         transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightjoystick);
+        
 
         /*transform.eulerAngles = new Vector3(0f, 0f, moveX * -60f);*/
 
