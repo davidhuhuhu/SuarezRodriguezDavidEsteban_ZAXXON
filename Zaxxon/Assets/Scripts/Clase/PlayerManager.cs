@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
 
-        desplSpeed = 5f;
+        desplSpeed = 15f;
 
         //comienza en 0 de rotacion
 
@@ -42,17 +42,22 @@ public class PlayerManager : MonoBehaviour
     void Update()
 
     {
+        MoverNave();
+
+    }
+    void MoverNave()
+    {
         //Obtengo mi posicion en X y en Y
 
         posY = transform.position.y;
         posX = transform.position.x;
-                    
-        
+
+
         //Translacion valores gamepad
 
         moveX = Input.GetAxis("Horizontal");
         moveY = Input.GetAxis("Vertical");
-        
+
 
         //rotacion gamepad
 
@@ -63,39 +68,38 @@ public class PlayerManager : MonoBehaviour
         /* navePos +=  despl;
          transform.position = navePos * deplSpeed * Time.deltaTime;*/
 
+        //Variables Vector3 para movimientos de translacion y rotacion
+
         Vector3 movimientoV = Vector3.up * desplSpeed * Time.deltaTime * moveY;
         Vector3 movimientoH = Vector3.right * desplSpeed * Time.deltaTime * moveX;
-
+        Vector3 Rotacion = Vector3.forward * Time.deltaTime * -360f * rightjoystick;
         //transform.Translate(movimientoV, Space.World);
         //transform.Translate(movimientoH, Space.World);
 
-         //|| A no ser
-        if((posY <= 10 || moveY < 0)&&(posY >=0|| moveY >0))
+
+        //Movimiento con limite
+        //significa || A no ser
+        if ((posY <= 30 || moveY < 0) && (posY >= 0 || moveY > 0))
         {
 
             transform.Translate(movimientoV, Space.World);
-        } 
+        }
 
-        if(posX <= 0 || moveX < 0)
+        if ((posX <= 60 || moveX < 0) && (posX >= -60 || moveX > 0))
         {
 
             transform.Translate(movimientoH, Space.World);
         }
 
 
-        transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightjoystick);
-        
+        transform.Rotate(Rotacion);
+
 
         /*transform.eulerAngles = new Vector3(0f, 0f, moveX * -60f);*/
 
 
 
-
-
-
-
-
-
-
     }
 }
+
+
