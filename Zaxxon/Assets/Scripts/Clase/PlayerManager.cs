@@ -78,7 +78,8 @@ public class PlayerManager : MonoBehaviour
 
 
         //Movimiento con limite
-        //significa || A no ser
+        //significa || A no ser ctrl+alt+1
+        //significa && comparacion, si el primero no se cumple, el siguiente jamás se cumplirá AND
         if ((posY <= 30 || moveY < 0) && (posY >= 0 || moveY > 0))
         {
 
@@ -91,6 +92,7 @@ public class PlayerManager : MonoBehaviour
             transform.Translate(movimientoH, Space.World);
         }
 
+        
 
         transform.Rotate(Rotacion);
 
