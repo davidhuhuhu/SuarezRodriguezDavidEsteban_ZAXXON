@@ -44,20 +44,65 @@ public class NaveMovement : MonoBehaviour
     void Update()
     {
 
-        Vector3 Vuelo = new Vector3(0, Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")) * movSpeed * Time.deltaTime;
+        //Para que funcionen los ifs siguientes estas variables deben estar declaradas
+
+        posY = transform.position.y;
+        posX = transform.position.x;
+
+        movX = Input.GetAxis("Horizontal");
+        movY = Input.GetAxis("Vertical");
+
+
+        //He metido en el mismo vector los valores de translacion, no se si esta bien pero funciona
+
+        float DirNV = -90;
+        float DirNH = -90;
+
+
+        Vector3 VueloV = new Vector3(0, Input.GetAxis("Vertical"), 0) * movSpeed * Time.deltaTime;
+        Vector3 VueloH = new Vector3(0, 0, Input.GetAxis("Horizontal")) * movSpeed * Time.deltaTime;
+        Vector3 cambioDV = new Vector3 (0f,DirNV,0f);
+        Vector3 cambioDH = new Vector3 (0f,0f,DirNH);
+
+
+        //En la rotacion le he restado -360 para arreglarla
         Vector3 Rotate = new Vector3(Input.GetAxis("HorizontalRJ"), 0, 0) *-360 * Time.deltaTime;
 
-        if (posX <= 50 )
+        /*if ((posY <= 50 || movY < 0) && (posY >= 0 || movY > 0)) */
+
+
+        //Voy a usar la A y la D porque con las Axis no me deja no se porque
+
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
         {
 
-          transform.Translate(Vuelo);
-          transform.Rotate(Rotate);
+            transform.Translate(cambioDV * Time.deltaTime);
+
+
+        } if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+
+            transform.Translate(cambioDH * Time.deltaTime);
 
 
         }
-
-
         
+
+
+
+
+
+        transform.Translate(VueloV);
+        transform.Translate(VueloH);
+
+        transform.Rotate(Rotate);
+
+
+
+
+
+
+
 
 
 
