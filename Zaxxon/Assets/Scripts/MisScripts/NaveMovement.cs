@@ -30,7 +30,7 @@ public class NaveMovement : MonoBehaviour
     void Start()
     {
         
-        movSpeed = 40f;
+        movSpeed = 25f;
         
         transform.position = NaveMov;
         transform.rotation = Quaternion.Euler (0f,0f,0f);
@@ -73,13 +73,13 @@ public class NaveMovement : MonoBehaviour
 
         //Voy a usar la A y la D porque con las Axis no me deja no se porque
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
         {
 
             transform.Translate(cambioDV * Time.deltaTime);
 
 
-        } if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        } if (Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
 
             transform.Translate(cambioDH * Time.deltaTime);
@@ -92,10 +92,10 @@ public class NaveMovement : MonoBehaviour
 
 
 
-        transform.Translate(VueloV);
+       /* transform.Translate(VueloV);
         transform.Translate(VueloH);
 
-        transform.Rotate(Rotate);
+        transform.Rotate(Rotate);*/
 
 
 
