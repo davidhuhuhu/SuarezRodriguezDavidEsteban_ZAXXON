@@ -9,7 +9,7 @@ public class NaveMovement : MonoBehaviour
     Vector3 NaveInitPos = Vector3.zero;
     Vector3 NaveMov;
 
-    [SerializeField] GameObject Minave;
+   // [SerializeField] GameObject Minave;
 
     //Variables de posicion y movimiento
 
@@ -24,17 +24,46 @@ public class NaveMovement : MonoBehaviour
 
     [SerializeField] float movSpeed;
 
+    Vector2 move;
+
+
+    InputActions inputActions;
+
+    private void Awake()
+    {
+        inputActions = new InputActions();
+
+        inputActions.Weapon.Shot.started += _ => Disparar();
+
+        // inputActions.Weapon.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
+
+        //  inputActions.Weapon.Move.canceled += _ => move = Vector2.zero;
+
+        inputActions.Weapon.MoveH.performed += ctx => movX = ctx.ReadValue<float>();
+        inputActions.Weapon.MoveH.canceled += _ => movX = 0f;
+
+        inputActions.Weapon.MoveV.performed += ctx => movY = ctx.ReadValue<float>();
+        inputActions.Weapon.MoveV.canceled += _ => movY = 0f;
+
+    }
+    void Disparar()
+    {
+
+        print ("Boom");
+
+
+    }
 
 
 
     void Start()
     {
         
-        movSpeed = 25f;
+        movSpeed = 10f;
         
-        transform.position = NaveMov;
+        /*transform.position = NaveMov;
         transform.rotation = Quaternion.Euler (0f,0f,0f);
-        
+        */
 
 
 
@@ -44,18 +73,27 @@ public class NaveMovement : MonoBehaviour
     void Update()
     {
 
+        print(movX);
+
+        transform.Translate(Vector3.right * movX * Time.deltaTime * movSpeed);
+        transform.Translate(Vector3.up * movY * Time.deltaTime * movSpeed);
+
+
+
+
+
         //Para que funcionen los ifs siguientes estas variables deben estar declaradas
 
-        posY = transform.position.y;
-        posX = transform.position.x;
+        //  posY = transform.position.y;
+        //  posX = transform.position.x;
 
-        movX = Input.GetAxis("Horizontal");
-        movY = Input.GetAxis("Vertical");
+        // movX = move.y;
+        //  movY = move.x;
 
 
         //He metido en el mismo vector los valores de translacion, no se si esta bien pero funciona
 
-        float DirNV = -90;
+        /*float DirNV = -90;
         float DirNH = -90;
 
 
@@ -73,7 +111,7 @@ public class NaveMovement : MonoBehaviour
 
         //Voy a usar la A y la D porque con las Axis no me deja no se porque
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        /*if (Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
         {
 
             transform.Translate(cambioDV * Time.deltaTime);
@@ -113,4 +151,17 @@ public class NaveMovement : MonoBehaviour
 
 
     }
+
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
 }
+
+
