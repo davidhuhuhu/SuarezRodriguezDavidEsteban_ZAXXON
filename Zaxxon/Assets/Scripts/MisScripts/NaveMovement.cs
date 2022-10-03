@@ -4,30 +4,40 @@ using UnityEngine;
 
 public class NaveMovement : MonoBehaviour
 {
-    //Movimiento de la nave
 
-    Vector3 NaveInitPos = Vector3.zero;
-    Vector3 NaveMov;
+    public float speed;
+    [SerializeField] NaveMovement naveMovement;
+    //Variable de vida
+    bool alive = true;
 
-   // [SerializeField] GameObject Minave;
 
-    //Variables de posicion y movimiento
+    //Pos nave
+    Vector3 navePos = Vector3.zero;
 
-    [SerializeField] float movY;
-    [SerializeField] float movX;
-    [SerializeField] float posY;
-    [SerializeField] float posX;
-    [SerializeField] float JSLeft;
-    
+    //Velocidad de desplazamientio
+    [SerializeField] float Dspeed;
 
-    //Variables de velocidad
+    //Variables de Input
+    float movY;
+    float movX;
 
-    [SerializeField] float movSpeed;
+    float rightStickH;
 
     Vector2 move;
 
-
     InputActions inputActions;
+
+    //Restricción de movimiento
+    float posY;
+    float posX;
+    float limiteVertUp = 10f;
+    float limiteVertDown = 0f;
+    float limiteHorRight = 10f;
+    float limiteHorLeft = -10f;
+
+    bool inLimitV = true;
+    bool inLimitH = true;
+
 
     private void Awake()
     {
@@ -35,9 +45,8 @@ public class NaveMovement : MonoBehaviour
 
         inputActions.Weapon.Shot.started += _ => Disparar();
 
-        // inputActions.Weapon.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
-
-        //  inputActions.Weapon.Move.canceled += _ => move = Vector2.zero;
+        //inputActions.Player.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
+        //inputActions.Player.Move.canceled += _ => move = Vector2.zero;
 
         inputActions.Weapon.MoveH.performed += ctx => movX = ctx.ReadValue<float>();
         inputActions.Weapon.MoveH.canceled += _ => movX = 0f;
@@ -46,108 +55,106 @@ public class NaveMovement : MonoBehaviour
         inputActions.Weapon.MoveV.canceled += _ => movY = 0f;
 
     }
+
     void Disparar()
     {
-
-        print ("Boom");
-
-
+        print("Bimbam");
     }
 
 
-
+    // Start is called before the first frame update
     void Start()
     {
-        
-        movSpeed = 10f;
-        
-        /*transform.position = NaveMov;
-        transform.rotation = Quaternion.Euler (0f,0f,0f);
-        */
+        Dspeed = 20f;
 
 
-
+        //Inicio en 9 de posición y de rotación
+        //transform.position = navePos;
+        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
+
+    /*
+    private void FixedUpdate()
+    {
+        navePos += despl;
+        transform.position = navePos * desplSpeed * Time.deltaTime;
+    }
+    */
 
     // Update is called once per frame
     void Update()
     {
 
-        print(movX);
-
-        transform.Translate(Vector3.right * movX * Time.deltaTime * movSpeed);
-        transform.Translate(Vector3.up * movY * Time.deltaTime * movSpeed);
+        //print(move);
 
 
-
-
-
-        //Para que funcionen los ifs siguientes estas variables deben estar declaradas
-
-        //  posY = transform.position.y;
-        //  posX = transform.position.x;
-
-        // movX = move.y;
-        //  movY = move.x;
-
-
-        //He metido en el mismo vector los valores de translacion, no se si esta bien pero funciona
-
-        /*float DirNV = -90;
-        float DirNH = -90;
-
-
-        Vector3 VueloV = new Vector3(0, Input.GetAxis("Vertical"), 0) * movSpeed * Time.deltaTime;
-        Vector3 VueloH = new Vector3(0, 0, Input.GetAxis("Horizontal")) * movSpeed * Time.deltaTime;
-        Vector3 cambioDV = new Vector3 (0f,DirNV,0f);
-        Vector3 cambioDH = new Vector3 (0f,0f,DirNH);
-
-
-        //En la rotacion le he restado -360 para arreglarla
-        Vector3 Rotate = new Vector3(Input.GetAxis("HorizontalRJ"), 0, 0) *-360 * Time.deltaTime;
-
-        /*if ((posY <= 50 || movY < 0) && (posY >= 0 || movY > 0)) */
-
-
-        //Voy a usar la A y la D porque con las Axis no me deja no se porque
-
-        /*if (Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        if (alive)
         {
-
-            transform.Translate(cambioDV * Time.deltaTime);
-
-
-        } if (Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-        {
-
-            transform.Translate(cambioDH * Time.deltaTime);
-
-
+            MoverNave();
+            CheckLimits();
         }
-        
-
-
-
-
-
-       /* transform.Translate(VueloV);
-        transform.Translate(VueloH);
-
-        transform.Rotate(Rotate);*/
-
-
-
-
-
-
-
-
 
 
     }
-    void MovimientoNave()
+
+    void MoverNave()
     {
 
+
+        //print(moveX);
+        //Obtengo mi posición en X y en Y
+        posY = transform.position.y;
+        posX = transform.position.x;
+
+       
+
+
+        Vector3 movimientoVertical = Vector3.up * Dspeed * Time.deltaTime * movY;
+        Vector3 movimientoHorizontal = Vector3.right * Dspeed * Time.deltaTime * movX;
+
+        if (inLimitV)
+            transform.Translate(movimientoVertical, Space.World);
+
+        if (inLimitH)
+            transform.Translate(movimientoHorizontal, Space.World);
+
+
+        transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
+
+        //transform.eulerAngles = new Vector3(0f, 0f, moveX * -60f);
+
+    }
+
+    void CheckLimits()
+    {
+
+        //Compruebo límites verticales
+        if (posY > limiteVertUp && movY > 0)
+        {
+            inLimitV = false;
+        }
+        else if (posY < limiteVertDown && movY < 0)
+        {
+            inLimitV = false;
+        }
+        else
+        {
+            inLimitV = true;
+        }
+
+        //Compruebo límites horizontales
+        if (posX > limiteHorRight && movX > 0)
+        {
+            inLimitH = false;
+        }
+        else if (posX < limiteHorLeft && movX < 0)
+        {
+            inLimitH = false;
+        }
+        else
+        {
+            inLimitH = true;
+        }
 
 
     }
@@ -162,6 +169,7 @@ public class NaveMovement : MonoBehaviour
     {
         inputActions.Disable();
     }
+
 }
 
 

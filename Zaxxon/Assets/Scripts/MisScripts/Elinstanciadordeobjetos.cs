@@ -7,6 +7,7 @@ public class Elinstanciadordeobjetos : MonoBehaviour
 
 
     [SerializeField] GameObject obstacle;
+    float invervalo;
     
     
     // Start is called before the first frame update
@@ -56,12 +57,13 @@ public class Elinstanciadordeobjetos : MonoBehaviour
 
             CrearColumna();
 
-
-            yield return new WaitForSeconds(1f);
-
-
+            yield return new WaitForSeconds(invervalo);
 
         }
+
+        
+
+
 
 
     }
