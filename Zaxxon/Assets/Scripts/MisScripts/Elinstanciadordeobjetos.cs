@@ -8,14 +8,16 @@ public class Elinstanciadordeobjetos : MonoBehaviour
 
     [SerializeField] GameObject obstacle;
     float invervalo;
-    
+    float speed;
+    float distanciaEntreColumnas;
     
     // Start is called before the first frame update
     void Start()
     {
-
-
-
+        distanciaEntreColumnas = Random.Range(10f, 50f);
+        speed = Random.Range(10f, 50f);
+        invervalo = distanciaEntreColumnas / speed;
+        
 
         CrearColumna();
 
