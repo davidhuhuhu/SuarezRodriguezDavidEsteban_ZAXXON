@@ -120,7 +120,7 @@ public class NaveMovement : MonoBehaviour
 
         transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
 
-        //transform.eulerAngles = new Vector3(0f, 0f, moveX * -60f);
+        transform.eulerAngles = new Vector3(0f, 0f, movX * -60f);
 
     }
 
