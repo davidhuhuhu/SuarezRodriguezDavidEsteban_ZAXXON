@@ -21,7 +21,7 @@ public class Elinstanciadordeobjetos : MonoBehaviour
 
         //navesita = GameObject.Find("Navesitag");
         //naveMovement = navesita.GetComponent<NaveMovement>();
-        distanciaEntreColumnas = 13f;     
+        distanciaEntreColumnas = 10f;     
 
         CrearColumna(transform.position.z);
 
@@ -76,9 +76,13 @@ public class Elinstanciadordeobjetos : MonoBehaviour
         
        
             float randomX = Random.Range(-30f, 30f);
-            Vector3 instpos = new Vector3(randomX, 0f, posZ);
+            float randomY = Random.Range(-30f, 30f);
+            Vector3 instposY =new Vector3(randomX, 0f, posZ);
+            Vector3 instposX= new Vector3(0f, randomY, posZ);
             //sin rotacion
-            Instantiate(obstacle, instpos, Quaternion.identity);
+            
+            Instantiate(obstacle, instposX, Quaternion.identity);
+            Instantiate(obstacle, instposY, Quaternion.identity);
                     
 
 
@@ -96,7 +100,7 @@ public class Elinstanciadordeobjetos : MonoBehaviour
 
             speed = naveMovement.speed;
             intervalo = distanciaEntreColumnas / naveMovement.speed;
-            print(intervalo);
+            
 
             CrearColumna(transform.position.z);
             
