@@ -16,8 +16,7 @@ public class NaveMovement : MonoBehaviour
 
     //Velocidad de desplazamientio
     [SerializeField] float Dspeed;
-
-    //Variables de Input
+        
     float movY;
     float movX;
 
@@ -30,10 +29,10 @@ public class NaveMovement : MonoBehaviour
     //Restricción de movimiento
     float posY;
     float posX;
-    float limiteVertUp = 10f;
+    float limiteVertUp = 30f;
     float limiteVertDown = 0f;
-    float limiteHorRight = 10f;
-    float limiteHorLeft = -10f;
+    float limiteHorRight = 25f;
+    float limiteHorLeft = -25f;
 
     bool inLimitV = true;
     bool inLimitH = true;
@@ -65,7 +64,7 @@ public class NaveMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Dspeed = 20f;
+        Dspeed = 30f;
 
 
         //Inicio en 9 de posición y de rotación

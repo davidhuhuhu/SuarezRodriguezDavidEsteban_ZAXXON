@@ -24,7 +24,7 @@ public class CameraMov : MonoBehaviour
         //transform.LookAt(nave);
 
         Vector3 targetPosition = nave.position - new Vector3(0f, -offsetY, offsetZ);
-        transform.position = targetPosition;
+       // transform.position = targetPosition;
 
         // Smoothly move the camera towards that target position
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
