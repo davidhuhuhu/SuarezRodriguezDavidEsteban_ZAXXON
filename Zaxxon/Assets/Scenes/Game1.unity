@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 45780050}
   - component: {fileID: 45780049}
   m_Layer: 0
-  m_Name: Plano (1)
+  m_Name: Plano4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45780048}
   m_LocalRotation: {x: -0, y: 0.081994005, z: -0.9966329, w: 0}
-  m_LocalPosition: {x: 0, y: 44.2, z: 164.2}
+  m_LocalPosition: {x: 0, y: 23.3, z: 160.7}
   m_LocalScale: {x: 16.333294, y: 65.08585, z: 95.50047}
   m_Children: []
   m_Father: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 428745420}
   - component: {fileID: 428745419}
   m_Layer: 0
-  m_Name: srf (1)
+  m_Name: Plano3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,7 +402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428745418}
   m_LocalRotation: {x: -0.10491173, y: -0.10491176, z: 0.69928074, w: 0.69928074}
-  m_LocalPosition: {x: 36.7, y: 21, z: 152.2}
+  m_LocalPosition: {x: 22.9, y: 21, z: 148}
   m_LocalScale: {x: 10.028825, y: 3.8963537, z: 79.58825}
   m_Children: []
   m_Father: {fileID: 0}
@@ -498,7 +498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541911028}
   m_LocalRotation: {x: -0.11805602, y: -0, z: -0, w: 0.99300694}
-  m_LocalPosition: {x: 0, y: -0.98, z: 164.2}
+  m_LocalPosition: {x: 0, y: 17.4, z: 159.8}
   m_LocalScale: {x: 16.333294, y: 65.08585, z: 95.50047}
   m_Children: []
   m_Father: {fileID: 0}
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 1583986309}
   - component: {fileID: 1583986308}
   m_Layer: 0
-  m_Name: srf
+  m_Name: Plano2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,7 +739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583986307}
   m_LocalRotation: {x: -0.08612929, y: 0.08612931, z: -0.7018417, w: 0.7018417}
-  m_LocalPosition: {x: -33.2, y: 21, z: 152.2}
+  m_LocalPosition: {x: -18.5, y: 21, z: 148.5}
   m_LocalScale: {x: 10.028825, y: 3.8963537, z: 79.58825}
   m_Children: []
   m_Father: {fileID: 0}
