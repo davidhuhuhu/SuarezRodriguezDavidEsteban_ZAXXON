@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraMov : MonoBehaviour
 {
 
-    [SerializeField] Transform nave;
+    public GameObject naveTarget;
+    //[SerializeField] Transform navesTarget;
 
     [SerializeField] float offsetZ;
     [SerializeField] float offsetY;
@@ -13,6 +14,12 @@ public class CameraMov : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        naveTarget = GameObject.FindWithTag("spaceShip");
+
+    }
     void Start()
     {
 
@@ -23,32 +30,45 @@ public class CameraMov : MonoBehaviour
     {
         //transform.LookAt(nave);
 
-        Vector3 targetPosition = nave.position - new Vector3(0f, -offsetY, offsetZ);
-       // transform.position = targetPosition;
-
+        //Vector3 targetPosition = naveTarget.transform.position - new Vector3(0f, -offsetY, offsetZ);
         // va lentito
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+        //transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+
+        if (naveTarget == null)
+        {
+            naveTarget = GameObject.FindWithTag("spaceShip");
+        }
+        else
+        {
+            Vector3 targetPosition = naveTarget.transform.position - new Vector3(0f, -offsetY, offsetZ);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+
+
+        }
+
+
+
+        /*  [SerializeField] Transform target;
+
+        [SerializeField] Vector3 offset;
+
+
+        void Start()
+        {
+
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            Vector3 posint = target.position + offset;
+
+
+
+            transform.position = posint;
+            transform.LookAt(target);
+
+        }*/
     }
-    /*  [SerializeField] Transform target;
-  
-    [SerializeField] Vector3 offset;
-
-    
-    void Start()
-    {
-
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Vector3 posint = target.position + offset;
-
-
-
-        transform.position = posint;
-        transform.LookAt(target);
-
-    }*/
 }

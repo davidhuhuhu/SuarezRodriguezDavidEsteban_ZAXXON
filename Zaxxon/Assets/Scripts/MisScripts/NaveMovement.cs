@@ -1,41 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class NaveMovement : MonoBehaviour
 {
+    //Nave
+    public float shipSpeed;
+    public NaveMovement naveMovement;
+    [SerializeField] GameObject avionMalla;
 
-    public float speed;
-    [SerializeField] NaveMovement naveMovement;
     //Variable de vida
     bool alive = true;
+    public GameObject bullet;
+    public GameObject Powerfullbullet;
+    public Transform spawnPoint;
 
+    //Balas
+    public float bulletForce = 5000f;
+    public float StrongBulletForce = 8000f;
+    public float bulletRatio = 4f;
+    public float StrongBulletRatio = 15f;
+    private float shotRateTime = 0;
+    private float StrongShotRateTime = 0;
+    public AudioClip audioShot;
+    AudioSource audioSource;
 
-    //Pos nave
-    Vector3 navePos = Vector3.zero;
-
-    //Velocidad de desplazamientio
+    //Pos nave y movimiento
+    InputActions inputActions;
     [SerializeField] float Dspeed;
-        
+    Vector3 navePos = Vector3.zero;
     float movY;
     float movX;
-
     float rightStickH;
+    float shot;
+    float StrongShot;
+    float n;
 
-    Vector2 move;
 
-    InputActions inputActions;
+    //Script que tiene el Canvas para gestionar el HUD
+    //[SerializeField] HudUpdate hudUpdate; 
 
     //Restricción de movimiento
     float posY;
     float posX;
-    float limiteVertUp = 30f;
-    float limiteVertDown = 0f;
-    float limiteHorRight = 25f;
-    float limiteHorLeft = -25f;
-
+    float limiteVertUp = 50f;
+    float limiteVertDown = -30f;
+    float limiteHorRight = 55f;
+    float limiteHorLeft = -55f;
     bool inLimitV = true;
     bool inLimitH = true;
+
+    //suavizado de mov
+    public float smoothTime = 0.2f;
+    private Vector3 velocity = Vector3.zero;
+    private Vector3 currentRot;
+
+    //meteoritos
+    public GameObject meteoritosInst;
+
+    //Score
+
+    public score newScore;
+    
 
 
     private void Awake()
@@ -43,9 +72,7 @@ public class NaveMovement : MonoBehaviour
         inputActions = new InputActions();
 
         inputActions.Weapon.Shot.started += _ => Disparar();
-
-        //inputActions.Player.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
-        //inputActions.Player.Move.canceled += _ => move = Vector2.zero;
+        //inputActions.Weapon.StrongShot.started += _ => StrongDisparo();
 
         inputActions.Weapon.MoveH.performed += ctx => movX = ctx.ReadValue<float>();
         inputActions.Weapon.MoveH.canceled += _ => movX = 0f;
@@ -53,60 +80,101 @@ public class NaveMovement : MonoBehaviour
         inputActions.Weapon.MoveV.performed += ctx => movY = ctx.ReadValue<float>();
         inputActions.Weapon.MoveV.canceled += _ => movY = 0f;
 
+        inputActions.Weapon.Shot.performed += ctx => shot = ctx.ReadValue<float>();
+        inputActions.Weapon.Shot.canceled += _ => shot = 0f;
+
+        inputActions.Weapon.StrongShot.performed += ctx => StrongShot = ctx.ReadValue<float>();
+        inputActions.Weapon.StrongShot.canceled += _ => StrongShot = 0f;
+
+        
+        avionMalla.tag = "spaceShip";
+        
     }
 
     void Disparar()
     {
-        print("Bimbam");
+
+        if (shot > 0)
+        {
+            if (Time.time > shotRateTime)
+            {
+                GameObject newBullet;
+
+                newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
+                newBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * bulletForce);
+
+                shotRateTime = Time.time + bulletRatio;
+
+                Destroy(newBullet, 2);
+                //audioSource.PlayOneShot(audioShot);
+            }
+        }
+
     }
 
+    void StrongDisparo()
+    {
 
-    // Start is called before the first frame update
+        if (StrongShot > 0)
+        {
+            if (Time.time > StrongShotRateTime)
+            {
+                GameObject newStrongBullet;
+
+                newStrongBullet = Instantiate(Powerfullbullet, spawnPoint.position, spawnPoint.rotation);
+                newStrongBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * StrongBulletForce);
+
+                StrongShotRateTime = Time.time + StrongBulletRatio;
+
+                Destroy(newStrongBullet, 2);
+
+            }
+        }
+
+
+    }
+
     void Start()
     {
-        Dspeed = 30f;
+        meteoritosInst = GameObject.FindWithTag("Meteoritos");
+        Dspeed = 55f;
+        
 
-
-        //Inicio en 9 de posición y de rotación
-        //transform.position = navePos;
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        audioSource = GetComponent<AudioSource>();
     }
 
-    /*
-    private void FixedUpdate()
-    {
-        navePos += despl;
-        transform.position = navePos * desplSpeed * Time.deltaTime;
-    }
-    */
-
-    // Update is called once per frame
     void Update()
     {
+        //!= si es diferente de
 
-        //print(move);
+        
+
+       
 
 
         if (alive)
         {
             MoverNave();
             CheckLimits();
+
+        }
+        else
+        {
+            DeadPanel.deadPanel.show();
         }
 
+        Disparar();
+        StrongDisparo();
 
     }
 
     void MoverNave()
     {
 
-
-        //print(moveX);
         //Obtengo mi posición en X y en Y
         posY = transform.position.y;
         posX = transform.position.x;
-
-       
-
 
         Vector3 movimientoVertical = Vector3.up * Dspeed * Time.deltaTime * movY;
         Vector3 movimientoHorizontal = Vector3.right * Dspeed * Time.deltaTime * movX;
@@ -118,9 +186,40 @@ public class NaveMovement : MonoBehaviour
             transform.Translate(movimientoHorizontal, Space.World);
 
 
-        transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
+        if (CharacterSelection.THIS.navesleccionada == null)
 
-        transform.eulerAngles = new Vector3(0f, 0f, movX * -60f);
+        { 
+            CharacterSelection.THIS.navesleccionada = 0;
+        }
+
+        if (CharacterSelection.THIS.navesleccionada == 0)
+        {
+            shipSpeed = 60f;
+            //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
+            Vector3 vectorRot = new Vector3(movY * -45f, 0, -45f * movX);
+            currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
+            transform.eulerAngles = new Vector3(0f, 0f, movX * -60f);
+
+
+        }
+        else if (CharacterSelection.THIS.navesleccionada == 1)
+        {
+
+            shipSpeed = 80f;
+            
+
+
+        }
+        else if(CharacterSelection.THIS.navesleccionada == 2)
+        {
+
+            shipSpeed = 65f;
+            //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
+            Vector3 vectorRot = new Vector3(movY * -45f, 0, -45f * movX);
+            currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
+            transform.eulerAngles = new Vector3(0f, 0f, movX * -60f);
+
+        }
 
     }
 
@@ -155,9 +254,68 @@ public class NaveMovement : MonoBehaviour
             inLimitH = true;
         }
 
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+
+        
+        /*if(avionMalla)
+         {
+            hudUpdate.UpdateLifes();
+         }
+         */
+
+        if (other.gameObject.tag == "PowerVUp")
+        {
+
+            shipSpeed++;
+            //print(shipSpeed);
+
+        }
+
+        if (other.gameObject.tag == "Meteoritos")
+        {
+            if(Bulletcol.THIS.impact == true)
+            {
+                shipSpeed = shipSpeed * 2f;
+                
+            }
+
+            print(shipSpeed);
+            GameManager.THIS.lifes--;
+            HudUpdate.THIS.UpdateLifes();
+
+            if (GameManager.THIS.lifes <= 0)
+            {
+                GameManager.alive = false;
+                avionMalla.SetActive(false);
+                shipSpeed = 0f;
+                Time.timeScale = 0;
+                
+                DeadPanel.deadPanel.show();
+            }
+            else
+            {
+                Destroy(other.gameObject);
+            }
+
+            print(other);
+        }
 
     }
 
+
+    void Morir()
+    {
+
+        
+
+
+    }
+   
 
     private void OnEnable()
     {

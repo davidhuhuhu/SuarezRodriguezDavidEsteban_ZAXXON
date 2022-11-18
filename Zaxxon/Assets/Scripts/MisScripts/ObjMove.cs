@@ -12,18 +12,28 @@ public class ObjMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        navesita = GameObject.Find("Navesitag");
+        navesita = GameObject.FindWithTag("spaceShip");
         naveMovement = navesita.GetComponent<NaveMovement>();
 
         
-
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        speed = naveMovement.speed;
+        if (gameObject.tag =="PowerVup")
+        {
+
+            speed = speed*2;
+
+        }
+        
+       
+
+
+
+        speed = naveMovement.shipSpeed;
         transform.Translate(Vector3.back * Time.deltaTime * speed);
 
 
@@ -39,7 +49,7 @@ public class ObjMove : MonoBehaviour
         
 
 
-        if (transform.position.z < -5f)
+        if (transform.position.z < -10f)
         {
 
             Destroy(gameObject);
@@ -48,6 +58,14 @@ public class ObjMove : MonoBehaviour
         }
 
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+       if( other.gameObject.tag == "Bullet")
+        {
+            Destroy(gameObject);
+
+        }
     }
 
 }

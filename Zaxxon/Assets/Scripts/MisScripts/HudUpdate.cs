@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HudUpdate : MonoBehaviour
+{
+
+
+    [SerializeField] Image lifesImage;
+
+    [SerializeField] Sprite[] lifesArray;
+   public static HudUpdate THIS ;
+
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        THIS = this;
+        GameManager.THIS.lifes = 3;
+        lifesImage.sprite = lifesArray[GameManager.THIS.lifes];
+        
+    }
+
+    
+
+    public void UpdateLifes()
+    {
+        int y = GameManager.THIS.lifes;
+        lifesImage.sprite = lifesArray[y];
+
+    }
+}
