@@ -186,11 +186,11 @@ public class NaveMovement : MonoBehaviour
             transform.Translate(movimientoHorizontal, Space.World);
 
 
-        if (CharacterSelection.THIS.navesleccionada == null)
+        /*if (CharacterSelection.THIS.navesleccionada == null)
 
         { 
             CharacterSelection.THIS.navesleccionada = 0;
-        }
+        }*/
 
         if (CharacterSelection.THIS.navesleccionada == 0)
         {
