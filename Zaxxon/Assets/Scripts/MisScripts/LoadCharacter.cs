@@ -12,7 +12,9 @@ public class LoadCharacter : MonoBehaviour
     
     void Start()
     {
-
+     
+        
+    
         int navesleccionada = PlayerPrefs.GetInt("navesleccionada");
         GameObject prefab = NavesPrefab[navesleccionada];
         GameObject clone = Instantiate(prefab, SpawnPoint.position, Quaternion.identity);

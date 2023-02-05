@@ -14,7 +14,8 @@ public class CharacterSelection : MonoBehaviour
     {
         THIS = this;
         
-        
+
+
     }
     private void Update()
     {

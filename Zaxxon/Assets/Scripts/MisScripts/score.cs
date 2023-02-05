@@ -10,7 +10,7 @@ public class score : MonoBehaviour
     public static int scoreValor;
     public Text scoreText;
     public static score THIS;
-    public int scorePublic;
+    //public int scorePublic;
     
    
 
@@ -25,7 +25,8 @@ public class score : MonoBehaviour
     private void Update()
     {
         
-        scorePublic = scoreValor;
+        //scorePublic = scoreValor;
+        AddScore();
     }
     public void AddScore()
     {

@@ -142,6 +142,7 @@ public class NaveMovement : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         audioSource = GetComponent<AudioSource>();
+        CharacterSelection.THIS.navesleccionada = 0;
     }
 
     void Update()
@@ -185,12 +186,9 @@ public class NaveMovement : MonoBehaviour
         if (inLimitH)
             transform.Translate(movimientoHorizontal, Space.World);
 
-
-        /*if (CharacterSelection.THIS.navesleccionada == null)
-
-        { 
-            CharacterSelection.THIS.navesleccionada = 0;
-        }*/
+ 
+        
+       
 
         if (CharacterSelection.THIS.navesleccionada == 0)
         {
@@ -205,7 +203,7 @@ public class NaveMovement : MonoBehaviour
         else if (CharacterSelection.THIS.navesleccionada == 1)
         {
 
-            shipSpeed = 80f;
+            shipSpeed = 100f;
             
 
 

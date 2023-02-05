@@ -21,7 +21,7 @@ public class Elinstanciadordeobjetos : MonoBehaviour
         iniPosInt = 40f;
         intervalo = 3f;
         distanciaEntreColumnas = 12f;
-        speed = 40f;
+        speed = 60f;
         //CrearColumna(transform.position.z);
 
         StartCoroutine("Corrutina");
