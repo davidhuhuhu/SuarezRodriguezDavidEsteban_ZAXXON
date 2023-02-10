@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,9 +11,10 @@ public class NaveMovement : MonoBehaviour
     public float shipSpeed;
     public NaveMovement naveMovement;
     [SerializeField] GameObject avionMalla;
+    public GameObject effect;
 
     //Variable de vida
-    bool alive = true;
+    
     public GameObject bullet;
     public GameObject Powerfullbullet;
     public Transform spawnPoint;
@@ -26,6 +27,7 @@ public class NaveMovement : MonoBehaviour
     private float shotRateTime = 0;
     private float StrongShotRateTime = 0;
     public AudioClip audioShot;
+    public AudioClip audioExplotion;
     AudioSource audioSource;
 
     //Pos nave y movimiento
@@ -43,7 +45,7 @@ public class NaveMovement : MonoBehaviour
     //Script que tiene el Canvas para gestionar el HUD
     //[SerializeField] HudUpdate hudUpdate; 
 
-    //Restricción de movimiento
+    //Restricciï¿½n de movimiento
     float posY;
     float posX;
     float limiteVertUp = 50f;
@@ -63,8 +65,8 @@ public class NaveMovement : MonoBehaviour
 
     //Score
 
-    public score newScore;
-    
+  
+
 
 
     private void Awake()
@@ -86,9 +88,9 @@ public class NaveMovement : MonoBehaviour
         inputActions.Weapon.StrongShot.performed += ctx => StrongShot = ctx.ReadValue<float>();
         inputActions.Weapon.StrongShot.canceled += _ => StrongShot = 0f;
 
-        
+
         avionMalla.tag = "spaceShip";
-        
+
     }
 
     void Disparar()
@@ -107,10 +109,13 @@ public class NaveMovement : MonoBehaviour
 
                 Destroy(newBullet, 2);
                 //audioSource.PlayOneShot(audioShot);
-            }
-        }
 
+            }
+            audioSource.PlayOneShot(audioShot, 1f);
+        }
+        
     }
+
 
     void StrongDisparo()
     {
@@ -138,26 +143,31 @@ public class NaveMovement : MonoBehaviour
     {
         meteoritosInst = GameObject.FindWithTag("Meteoritos");
         Dspeed = 55f;
-        
+
 
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         audioSource = GetComponent<AudioSource>();
+        
         CharacterSelection.THIS.navesleccionada = 0;
+        
+
     }
 
     void Update()
     {
         //!= si es diferente de
 
-        
-
-       
 
 
-        if (alive)
+
+
+
+        if (GameManager.alive == true)
         {
             MoverNave();
             CheckLimits();
+            Disparar();
+            StrongDisparo();
 
         }
         else
@@ -165,15 +175,14 @@ public class NaveMovement : MonoBehaviour
             DeadPanel.deadPanel.show();
         }
 
-        Disparar();
-        StrongDisparo();
+       
 
     }
 
     void MoverNave()
     {
 
-        //Obtengo mi posición en X y en Y
+        //Obtengo mi posiciï¿½n en X y en Y
         posY = transform.position.y;
         posX = transform.position.x;
 
@@ -186,9 +195,9 @@ public class NaveMovement : MonoBehaviour
         if (inLimitH)
             transform.Translate(movimientoHorizontal, Space.World);
 
- 
-        
-       
+
+
+
 
         if (CharacterSelection.THIS.navesleccionada == 0)
         {
@@ -204,11 +213,11 @@ public class NaveMovement : MonoBehaviour
         {
 
             shipSpeed = 100f;
-            
+
 
 
         }
-        else if(CharacterSelection.THIS.navesleccionada == 2)
+        else if (CharacterSelection.THIS.navesleccionada == 2)
         {
 
             shipSpeed = 65f;
@@ -224,7 +233,7 @@ public class NaveMovement : MonoBehaviour
     void CheckLimits()
     {
 
-        //Compruebo límites verticales
+        //Compruebo lï¿½mites verticales
         if (posY > limiteVertUp && movY > 0)
         {
             inLimitV = false;
@@ -238,7 +247,7 @@ public class NaveMovement : MonoBehaviour
             inLimitV = true;
         }
 
-        //Compruebo límites horizontales
+        //Compruebo lï¿½mites horizontales
         if (posX > limiteHorRight && movX > 0)
         {
             inLimitH = false;
@@ -259,7 +268,7 @@ public class NaveMovement : MonoBehaviour
     {
 
 
-        
+
         /*if(avionMalla)
          {
             hudUpdate.UpdateLifes();
@@ -269,17 +278,17 @@ public class NaveMovement : MonoBehaviour
         if (other.gameObject.tag == "PowerVUp")
         {
 
-            shipSpeed++;
+            GameManager.THIS.lifes++;
             //print(shipSpeed);
 
         }
 
         if (other.gameObject.tag == "Meteoritos")
         {
-            if(Bulletcol.THIS.impact == true)
+            if (Bulletcol.THIS.impact == true)
             {
                 shipSpeed = shipSpeed * 2f;
-                
+
             }
 
             print(shipSpeed);
@@ -291,13 +300,14 @@ public class NaveMovement : MonoBehaviour
                 GameManager.alive = false;
                 avionMalla.SetActive(false);
                 shipSpeed = 0f;
-                Time.timeScale = 0;
-                
-                DeadPanel.deadPanel.show();
+                audioSource.PlayOneShot(audioExplotion, 1f);
+                Invoke("Morir", 2f);
+                Instantiate(effect, transform.position, transform.rotation);
             }
             else
             {
                 Destroy(other.gameObject);
+
             }
 
             print(other);
@@ -309,11 +319,13 @@ public class NaveMovement : MonoBehaviour
     void Morir()
     {
 
+        Time.timeScale = 0;
+
+        DeadPanel.deadPanel.show();
         
 
-
     }
-   
+
 
     private void OnEnable()
     {
@@ -326,5 +338,4 @@ public class NaveMovement : MonoBehaviour
     }
 
 }
-
 

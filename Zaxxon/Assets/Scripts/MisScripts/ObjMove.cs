@@ -8,6 +8,7 @@ public class ObjMove : MonoBehaviour
     float speed;
     [SerializeField] NaveMovement naveMovement;
     GameObject navesita;
+    public GameObject destruccion;
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +65,7 @@ public class ObjMove : MonoBehaviour
        if( other.gameObject.tag == "Bullet")
         {
             Destroy(gameObject);
-
+            Instantiate(destruccion, transform.position, transform.rotation);
         }
     }
 

@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public int lifes;
 
+    public int puntos;
+
     //Nave elegida por el usuario
     //public int naveElegida;
    

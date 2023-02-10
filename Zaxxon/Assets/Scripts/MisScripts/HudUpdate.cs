@@ -12,6 +12,8 @@ public class HudUpdate : MonoBehaviour
     [SerializeField] Sprite[] lifesArray;
    public static HudUpdate THIS ;
 
+    [SerializeField] Text scoreText;
+
     
     // Start is called before the first frame update
     void Start()
@@ -29,5 +31,12 @@ public class HudUpdate : MonoBehaviour
         int y = GameManager.THIS.lifes;
         lifesImage.sprite = lifesArray[y];
 
+    }
+
+    public void UpdatePoints()
+    {
+        scoreText.text = "Score:" + GameManager.THIS.puntos; ;
+        //print(scoreValor);
+        
     }
 }

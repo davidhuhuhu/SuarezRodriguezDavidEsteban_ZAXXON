@@ -22,12 +22,19 @@ public class Bulletcol : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.gameObject.tag == "Meteoritos")
         {
+            GameManager.THIS.puntos++;
+            GameObject.Find("Canvas").GetComponent<HudUpdate>().UpdatePoints();
+            /*
            //scoreValue++;
             impact = true;
-            score.THIS.AddScore();
+            GameObject.Find("Manager").GetComponent<score>().AddScore();
+            //score.THIS.AddScore();
+            */
         }
+        
     }
 
 
