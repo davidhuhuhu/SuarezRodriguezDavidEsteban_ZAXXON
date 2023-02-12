@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public int lifes;
 
     public int puntos;
+    public float Velocity;
+    
+    [SerializeField] GameObject naveMalla;
 
     //Nave elegida por el usuario
     //public int naveElegida;
@@ -23,15 +26,18 @@ public class GameManager : MonoBehaviour
 
         THIS = this;
 
+        
 
 
+        
     }
 
     private void Start()
     {
 
         StartGame();
-        
+        naveMalla = GameObject.FindGameObjectWithTag("spaceShip");
+
     }
 
     public void StartGame()
@@ -45,8 +51,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
 
+
+        Velocity = naveMalla.GetComponent<NaveMovement>().shipSpeed;
 
 
 

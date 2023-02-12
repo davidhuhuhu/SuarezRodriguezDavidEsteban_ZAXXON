@@ -323,7 +323,7 @@ RectTransform:
   - {fileID: 2008573614}
   - {fileID: 929865020}
   m_Father: {fileID: 1570798619}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28829172, y: 0.15}
   m_AnchorMax: {x: 0.7106042, y: 0.84722227}
@@ -599,6 +599,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifes: 0
   puntos: 0
+  Velocity: 0
+  naveMalla: {fileID: 0}
 --- !u!114 &388408105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +633,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9fda592cb541697418b17facfb86577d, type: 3}
   - {fileID: 21300000, guid: 9aebffd2eb6994a4fbe35d6e9a69adaf, type: 3}
   - {fileID: 21300000, guid: 98fd49fc73e11094b9b07c00bd6e3c50, type: 3}
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 1586357739}
+  NaveVelocity: {fileID: 561446205}
 --- !u!114 &388408107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,7 +661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelSettings: {fileID: 232718689}
-  resume: {fileID: 0}
+  resume: {fileID: 1293509296}
 --- !u!1 &530695725
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,10 +738,10 @@ MonoBehaviour:
   bulletRatio: 0.05
   StrongBulletRatio: 15
   audioShot: {fileID: 0}
+  audioExplotion: {fileID: 0}
   Dspeed: 0
   smoothTime: 0.35
   meteoritosInst: {fileID: 0}
-  newScore: {fileID: 0}
 --- !u!65 &530695731
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -861,6 +864,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &561446203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561446204}
+  - component: {fileID: 561446206}
+  - component: {fileID: 561446205}
+  m_Layer: 5
+  m_Name: Velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &561446204
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561446203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1570798619}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.80600005, y: 0}
+  m_AnchorMax: {x: 1, y: 0.25062963}
+  m_AnchoredPosition: {x: -15, y: -58}
+  m_SizeDelta: {x: -115, y: -133.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &561446205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561446203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    m_FontSize: 53
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 106
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Score: '
+--- !u!222 &561446206
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561446203}
+  m_CullTransparentMesh: 1
 --- !u!1 &574762857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2253,7 @@ RectTransform:
   - {fileID: 1784798723}
   - {fileID: 1788409707}
   - {fileID: 1586357738}
+  - {fileID: 561446204}
   - {fileID: 232718690}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -2199,6 +2282,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9aebffd2eb6994a4fbe35d6e9a69adaf, type: 3}
   - {fileID: 21300000, guid: 98fd49fc73e11094b9b07c00bd6e3c50, type: 3}
   scoreText: {fileID: 1586357739}
+  NaveVelocity: {fileID: 561446205}
 --- !u!1 &1586357737
 GameObject:
   m_ObjectHideFlags: 0

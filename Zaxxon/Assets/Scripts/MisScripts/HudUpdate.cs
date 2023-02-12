@@ -13,6 +13,7 @@ public class HudUpdate : MonoBehaviour
    public static HudUpdate THIS ;
 
     [SerializeField] Text scoreText;
+    [SerializeField] Text NaveVelocity;
 
     
     // Start is called before the first frame update
@@ -38,5 +39,9 @@ public class HudUpdate : MonoBehaviour
         scoreText.text = "Score:" + GameManager.THIS.puntos; ;
         //print(scoreValor);
         
+    }
+    public void UpdateSpeed()
+    {
+        NaveVelocity.text = "Speed" + GameManager.THIS.Velocity;
     }
 }

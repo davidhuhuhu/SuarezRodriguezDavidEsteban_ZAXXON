@@ -9,6 +9,8 @@ public class Bulletcol : MonoBehaviour
     public bool impact;
     //Rigidbody rb;
     public static Bulletcol THIS;
+    NaveMovement NaveM;
+    public float naveSpeed;
     
     private void Awake()
     {
@@ -17,9 +19,13 @@ public class Bulletcol : MonoBehaviour
         //rb = GetComponent<Rigidbody>();
         
     }
+    private void Start()
+    {
+        
+    }
 
     // Update is called once per frame
-    
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -34,6 +40,12 @@ public class Bulletcol : MonoBehaviour
             //score.THIS.AddScore();
             */
         }
+        else if(other.gameObject.tag == "PowerVUp")
+        {
+            GameManager.THIS.Velocity++;
+            GameObject.Find("Canvas").GetComponent<HudUpdate>().UpdateSpeed();
+        }
+
         
     }
 
