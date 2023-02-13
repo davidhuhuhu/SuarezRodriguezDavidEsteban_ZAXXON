@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6030299012566005584}
   m_Layer: 0
   m_Name: Objetosinst 3
-  m_TagString: Untagged
+  m_TagString: Meteoritos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   naveMovement: {fileID: 0}
-  destruccion: {fileID: 100008, guid: 54b661f759164cb4cb9424de6a512cf8, type: 3}
+  destruccion: {fileID: 100008, guid: 7e434543af9a9694eb543bfed5b37dcc, type: 3}
 --- !u!65 &2582603767858012143
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ public class NaveMovement : MonoBehaviour
     public NaveMovement naveMovement;
     [SerializeField] GameObject avionMalla;
     public GameObject effect;
+    public GameObject effectPU;
+    public GameObject effectChoque;
 
     //Variable de vida
     
@@ -111,7 +113,7 @@ public class NaveMovement : MonoBehaviour
                 //audioSource.PlayOneShot(audioShot);
 
             }
-            audioSource.PlayOneShot(audioShot, 1f);
+            audioSource.PlayOneShot(audioShot, 0.3f);
         }
         
     }
@@ -134,6 +136,7 @@ public class NaveMovement : MonoBehaviour
                 Destroy(newStrongBullet, 2);
 
             }
+            audioSource.PlayOneShot(audioShot, 0.3f);
         }
 
 
@@ -141,13 +144,15 @@ public class NaveMovement : MonoBehaviour
 
     void Start()
     {
-        meteoritosInst = GameObject.FindWithTag("Meteoritos");
+       
         Dspeed = 55f;
+        meteoritosInst = GameObject.FindWithTag("Meteoritos");
 
 
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         audioSource = GetComponent<AudioSource>();
-        
+
+        SelecionarSpeedNave();
         
         
 
@@ -156,11 +161,7 @@ public class NaveMovement : MonoBehaviour
     void Update()
     {
         //!= si es diferente de
-
-
-
-
-
+        
 
         if (GameManager.alive == true)
         {
@@ -174,8 +175,8 @@ public class NaveMovement : MonoBehaviour
         {
             DeadPanel.deadPanel.show();
         }
+        
 
-       
 
     }
 
@@ -196,12 +197,9 @@ public class NaveMovement : MonoBehaviour
             transform.Translate(movimientoHorizontal, Space.World);
 
 
-
-
-
         if (CharacterSelection.THIS.navesleccionada == 0)
         {
-            shipSpeed = 60f;
+     
             //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
             Vector3 vectorRot = new Vector3(movY * -45f, 0, -45f * movX);
             currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
@@ -212,15 +210,12 @@ public class NaveMovement : MonoBehaviour
         else if (CharacterSelection.THIS.navesleccionada == 1)
         {
 
-            shipSpeed = 100f;
-
 
 
         }
         else if (CharacterSelection.THIS.navesleccionada == 2)
         {
-
-            shipSpeed = 65f;
+ 
             //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
             Vector3 vectorRot = new Vector3(movY * -45f, 0, -45f * movX);
             currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
@@ -228,6 +223,28 @@ public class NaveMovement : MonoBehaviour
 
         }
 
+
+
+    }
+    void SelecionarSpeedNave()
+    {
+        if (CharacterSelection.THIS.navesleccionada == 0)
+        {
+            shipSpeed = 60f;
+
+        }
+        else if (CharacterSelection.THIS.navesleccionada == 1)
+        {
+
+            shipSpeed = 100f;
+
+        }
+        else if (CharacterSelection.THIS.navesleccionada == 2)
+        {
+
+            shipSpeed = 65f;
+
+        }
     }
 
     void CheckLimits()
@@ -267,33 +284,20 @@ public class NaveMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-
-
         /*if(avionMalla)
          {
             hudUpdate.UpdateLifes();
          }
          */
 
-        if (other.gameObject.tag == "PowerVUp")
-        {
-
-            GameManager.THIS.lifes++;
-            //print(shipSpeed);
-
-        }
 
         if (other.gameObject.tag == "Meteoritos")
-        {
-            if (Bulletcol.THIS.impact == true)
-            {
-                shipSpeed = shipSpeed * 2f;
-
-            }
-
+        {         
             print(shipSpeed);
             GameManager.THIS.lifes--;
             HudUpdate.THIS.UpdateLifes();
+            shipSpeed = shipSpeed/0.2f;
+            Instantiate(effectChoque, transform.position, transform.rotation);
 
             if (GameManager.THIS.lifes <= 0)
             {
@@ -311,6 +315,18 @@ public class NaveMovement : MonoBehaviour
             }
 
             print(other);
+        }
+        else if(other.gameObject.tag == "PowerVUp")
+        {
+            if (GameManager.THIS.lifes <= 2|| GameManager.THIS.lifes >0)
+            {
+                GameManager.THIS.lifes++;
+                HudUpdate.THIS.UpdateLifes();
+                //print(shipSpeed);
+                shipSpeed = shipSpeed * 1.5f;
+                Instantiate(effectPU, transform.position, transform.rotation);
+            }
+          
         }
 
     }

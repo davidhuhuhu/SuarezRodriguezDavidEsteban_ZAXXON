@@ -5,8 +5,8 @@ using TMPro;
 
 public class Selectionnaveprev : MonoBehaviour
 {
-    public GameObject[] NavesPrefab;
-    public Transform spawneonaves;
+    public GameObject[] NavesPrefabimage;
+    
     public TMP_Text navesText;
 
 

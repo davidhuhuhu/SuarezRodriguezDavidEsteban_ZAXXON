@@ -74,7 +74,7 @@ public class Elinstanciadordeobjetos : MonoBehaviour
         
 
         //cloneY.gameObject.tag = "Meteoritos";
-        cloneX.gameObject.tag = "Meteoritos";
+        //cloneX.gameObject.tag = "Meteoritos";
         //PowerVelocityUp.gameObject.tag = "PowerVUp";
 
 

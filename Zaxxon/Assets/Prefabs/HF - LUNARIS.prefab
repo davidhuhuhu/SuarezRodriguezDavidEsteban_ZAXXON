@@ -480,7 +480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3116767163152647274
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +525,8 @@ MonoBehaviour:
   naveMovement: {fileID: -4629910193161106904}
   avionMalla: {fileID: 5779532178314129597}
   effect: {fileID: 100016, guid: 39051c4c6f9bd604382d68b7a910a9e0, type: 3}
+  effectPU: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
+  effectChoque: {fileID: 4794043405585894037, guid: 37138c0c33167b04fa1fb90b7f5a794f, type: 3}
   bullet: {fileID: 322661622413935999, guid: 3182403ef9d45c4408e215d054f00be8, type: 3}
   Powerfullbullet: {fileID: 5897728770158240718, guid: c10d2b5e753ec2b4f81a898078b17d41, type: 3}
   spawnPoint: {fileID: 6121237643319360414}

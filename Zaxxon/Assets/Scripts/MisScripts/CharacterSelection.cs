@@ -3,43 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour
 {
     public static CharacterSelection THIS;
     public GameObject[] naves;
+    public GameObject[] navesPrefabImage;
+    Image naveSprite;
     public int navesleccionada = 0;
+    
     public TMP_Text txtnave;
     public void Start()
     {
         THIS = this;
-        
+        naves[0].SetActive(true);
+        navesPrefabImage[0].SetActive(true);
 
 
     }
     private void Update()
     {
         GameObject prefab = naves[navesleccionada];
+        
         txtnave.text = prefab.name;
+        
+        
+        
     }
 
     public void NextNave()
     {
         naves[navesleccionada].SetActive(false);
+        navesPrefabImage[navesleccionada].SetActive(false);
         navesleccionada = (navesleccionada + 1) % naves.Length;
+        navesleccionada = (navesleccionada + 1) % navesPrefabImage.Length;
         naves[navesleccionada].SetActive(true);
+        navesPrefabImage[navesleccionada].SetActive(true);
 
     }
     public void PreviousNave()
     {
 
         naves[navesleccionada].SetActive(false);
+        navesPrefabImage[navesleccionada].SetActive(false);
         navesleccionada--;
         if(navesleccionada<0)
         {
             navesleccionada += naves.Length;
+            navesleccionada += navesPrefabImage.Length;
         }
         naves[navesleccionada].SetActive(true);
+        navesPrefabImage[navesleccionada].SetActive(true);
 
 
     }
@@ -48,6 +63,7 @@ public class CharacterSelection : MonoBehaviour
     {
 
         PlayerPrefs.SetInt("navesleccionada", navesleccionada);
+
         SceneManager.LoadScene(2, LoadSceneMode.Single);
 
         

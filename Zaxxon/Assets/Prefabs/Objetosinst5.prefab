@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   naveMovement: {fileID: 0}
-  destruccion: {fileID: 100008, guid: 54b661f759164cb4cb9424de6a512cf8, type: 3}
+  destruccion: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
 --- !u!1001 &7090518319552446242
 PrefabInstance:
   m_ObjectHideFlags: 0

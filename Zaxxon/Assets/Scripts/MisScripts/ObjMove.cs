@@ -15,8 +15,8 @@ public class ObjMove : MonoBehaviour
     {
         navesita = GameObject.FindWithTag("spaceShip");
         naveMovement = navesita.GetComponent<NaveMovement>();
+        speed = naveMovement.shipSpeed;
 
-        
     }
 
     // Update is called once per frame
@@ -29,18 +29,12 @@ public class ObjMove : MonoBehaviour
             speed = speed*2;
 
         }
-        
-       
-
-
-
-        speed = naveMovement.shipSpeed;
+   
         transform.Translate(Vector3.back * Time.deltaTime * speed);
 
 
         Destruir();
-          
-   
+  
                
     }
     
