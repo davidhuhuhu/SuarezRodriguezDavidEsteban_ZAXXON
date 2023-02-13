@@ -44,7 +44,7 @@ public class ObjMove : MonoBehaviour
         
 
 
-        if (transform.position.z < -10f)
+        if (transform.position.z < -50f)
         {
 
             Destroy(gameObject);

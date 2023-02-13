@@ -175,7 +175,7 @@ public class NaveMovement : MonoBehaviour
         {
             DeadPanel.deadPanel.show();
         }
-        
+        print(GameManager.THIS.lifes);
 
 
     }
@@ -197,7 +197,7 @@ public class NaveMovement : MonoBehaviour
             transform.Translate(movimientoHorizontal, Space.World);
 
 
-        if (CharacterSelection.THIS.navesleccionada == 0)
+        if (GameManager.naveSelecionada == 0)
         {
      
             //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
@@ -207,13 +207,13 @@ public class NaveMovement : MonoBehaviour
 
 
         }
-        else if (CharacterSelection.THIS.navesleccionada == 1)
+        else if (GameManager.naveSelecionada == 1)
         {
 
 
 
         }
-        else if (CharacterSelection.THIS.navesleccionada == 2)
+        else if (GameManager.naveSelecionada == 2)
         {
  
             //transform.Rotate(Vector3.forward * Time.deltaTime * -360f * rightStickH);
@@ -228,18 +228,18 @@ public class NaveMovement : MonoBehaviour
     }
     void SelecionarSpeedNave()
     {
-        if (CharacterSelection.THIS.navesleccionada == 0)
+        if (GameManager.naveSelecionada == 0)
         {
             shipSpeed = 60f;
 
         }
-        else if (CharacterSelection.THIS.navesleccionada == 1)
+        else if (GameManager.naveSelecionada == 1)
         {
 
             shipSpeed = 100f;
 
         }
-        else if (CharacterSelection.THIS.navesleccionada == 2)
+        else if (GameManager.naveSelecionada == 2)
         {
 
             shipSpeed = 65f;
@@ -294,10 +294,14 @@ public class NaveMovement : MonoBehaviour
         if (other.gameObject.tag == "Meteoritos")
         {         
             print(shipSpeed);
-            GameManager.THIS.lifes--;
-            HudUpdate.THIS.UpdateLifes();
-            shipSpeed = shipSpeed/0.2f;
-            Instantiate(effectChoque, transform.position, transform.rotation);
+            if(GameManager.THIS.lifes>0)
+            {
+                GameManager.THIS.lifes--;
+                HudUpdate.THIS.UpdateLifes();
+                shipSpeed = shipSpeed / 0.5f;
+                Instantiate(effectChoque, transform.position, transform.rotation);
+            }
+            
 
             if (GameManager.THIS.lifes <= 0)
             {
@@ -318,7 +322,7 @@ public class NaveMovement : MonoBehaviour
         }
         else if(other.gameObject.tag == "PowerVUp")
         {
-            if (GameManager.THIS.lifes <= 2|| GameManager.THIS.lifes >0)
+            if (GameManager.THIS.lifes <= 2 && GameManager.THIS.lifes >0)
             {
                 GameManager.THIS.lifes++;
                 HudUpdate.THIS.UpdateLifes();
@@ -326,7 +330,8 @@ public class NaveMovement : MonoBehaviour
                 shipSpeed = shipSpeed * 1.5f;
                 Instantiate(effectPU, transform.position, transform.rotation);
             }
-          
+            Destroy(other.gameObject);
+
         }
 
     }

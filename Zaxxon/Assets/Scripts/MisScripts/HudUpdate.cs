@@ -42,6 +42,10 @@ public class HudUpdate : MonoBehaviour
     }
     public void UpdateSpeed()
     {
-        NaveVelocity.text = "Speed" + GameManager.THIS.Velocity;
+        NaveVelocity.text = "Speed:" + GameManager.THIS.Velocity;
+    }
+    private void Update()
+    {
+        UpdateSpeed();
     }
 }

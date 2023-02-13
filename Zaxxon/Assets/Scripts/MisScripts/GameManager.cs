@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager THIS;
+
+    public static int naveSelecionada;
    
 
     // Start is called before the first frame update
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
 
 
+        Velocity = naveMalla.GetComponent<NaveMovement>().shipSpeed;
         Velocity = naveMalla.GetComponent<NaveMovement>().shipSpeed;
 
 

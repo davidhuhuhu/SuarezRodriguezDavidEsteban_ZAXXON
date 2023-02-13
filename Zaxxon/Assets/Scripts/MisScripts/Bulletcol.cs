@@ -43,7 +43,7 @@ public class Bulletcol : MonoBehaviour
         else if(other.gameObject.tag == "PowerVUp")
         {
             GameManager.THIS.Velocity++;
-            GameObject.Find("Canvas").GetComponent<HudUpdate>().UpdateSpeed();
+            
         }
 
         
